@@ -1,0 +1,41 @@
+<div class="mb-3">
+  <label class="inline-block mb-2">{{ label }}</label>
+
+  <!-- Input Type: text, password, email, etc. -->
+  <ng-container *ngIf="inputType !== 'radio' && inputType !== 'select'">
+    <input
+      class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
+        duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+      [type]="inputType"
+      [placeholder]="placeholder"
+      [formControl]="Control" [mask]="format"
+    />
+  </ng-container>
+
+  <!-- Input Type: radio -->
+  <ng-container *ngIf="inputType === 'radio'">
+    <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600" *ngFor="let option of options">
+        <div class="flex items-center ps-3">
+          <input id="{{ 'horizontal-list-radio-' + option.value }}" type="radio" [value]="option.value" [formControl]="Control" name="list-radio"
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+          <label for="{{ 'horizontal-list-radio-' + option.value }}" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"> {{ option.label }} </label>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+
+  <!-- Input Type: select -->
+  <ng-container *ngIf="inputType === 'select'">
+    <select [formControl]="Control"
+      class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <option value="" disabled selected>{{ placeholder }}</option>
+      <option *ngFor="let option of options" [value]="option.code">{{ option.name }}</option>
+    </select>
+  </ng-container>
+  <div *ngFor="let errorKey of keys()">
+    <div *ngIf="(Control.touched || Control.dirty) && Control.hasError(errorKey)">
+      {{ errorMessage[errorKey] }}
+    </div>
+  </div>
+</div>

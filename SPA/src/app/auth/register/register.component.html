@@ -1,0 +1,43 @@
+
+<form [formGroup]="RegisterForm" (ngSubmit)="register()">
+
+
+
+  <app-input
+    [label]="'Email'"
+    [placeholder]="'Enter Email'"
+    [Control]="email"
+    [errorMessage]="{ required: 'Email is required.', email: 'Please enter a valid email.', EmailTaken: 'email is already taken' }"
+    [inputType]="'email'"
+  ></app-input>
+
+
+
+  <app-input
+    [label]="'Password'"
+    [placeholder]="'Enter Password'"
+    [Control]="password"
+    [errorMessage]="{ required: 'Password is required.', minlength: 'Password must be at least 8 characters.' }"
+    [inputType]="'password'"
+  ></app-input>
+
+  <app-input
+    [label]="'Confirm Password'"
+    [placeholder]="'Confirm Password'"
+    [Control]="confirmPassword"
+    [errorMessage]="{ required: 'Confirm Password is required.', Notmatch: 'Password confirmation mismatch. Please verify' }"
+    [inputType]="'password'"
+  ></app-input>
+
+
+  <button type="submit"
+  class="block w-full bg-indigo-400 text-white py-1.5 px-3
+  rounded transition hover:bg-indigo-500
+  disabled:opacity-50 disabled:bg-indigo-400"
+  [disabled]="RegisterForm.invalid || insubmition">
+    Submit
+  </button>
+</form>
+<app-alert *ngIf="showAlert" [color]="alertColor">
+  {{ alertMsg }}
+</app-alert>
