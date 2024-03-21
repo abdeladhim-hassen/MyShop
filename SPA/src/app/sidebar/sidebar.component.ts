@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { ModalService } from '../shared/modal.service';
 import { AuthService } from '../services/auth.service';
 
+
+
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css'
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.css'
 })
-export class NavComponent {
+export class SidebarComponent {
+
   constructor(
     public Model: ModalService,
     public auth: AuthService,

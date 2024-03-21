@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
       },
       error: (error) => {
         console.error(error);
-        this.handleRegisterError(error);
+        this.handleRegisterResponse(error);
       },
       complete: () => {
         // Facultatif : Gérez la logique de complétion si nécessaire
@@ -59,11 +59,6 @@ export class RegisterComponent implements OnInit {
   private handleRegisterResponse(response: ServiceResponse<number>): void {
     this.alertMsg = response.message;
     this.alertColor = response.success ? 'green' : 'red';
-  }
-
-  private handleRegisterError(error: any): void {
-    this.alertMsg = error.error.message || 'Quelque chose s\'est mal passé.';
-    this.alertColor = 'red';
   }
 
 }

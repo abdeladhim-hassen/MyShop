@@ -3,12 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ResponseErrorHandlerInterceptor } from './interceptors/response-error-handler.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -16,9 +19,10 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
     HomeComponent,
-    ProductListComponent
+    ProductListComponent,
+    NavbarComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,13 +31,19 @@ export function tokenGetter() {
     JwtModule.forRoot(
       {
         config: {
-          tokenGetter: tokenGetter, // Implement your token retrieval logic
-          allowedDomains: [environment.apiUrl], // Add your domain(s) here
+          tokenGetter: tokenGetter,
+          allowedDomains: [environment.apiUrl],
         },
       }
    )
   ],
-  providers: [],
+  providers: [
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ResponseErrorHandlerInterceptor,
+        multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

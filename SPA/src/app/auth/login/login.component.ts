@@ -33,8 +33,8 @@ export class LoginComponent {
         this.handleLoginResponse(response);
       },
       error: (error) => {
-        console.error(error);
-        this.handleLoginError(error);
+        this.handleLoginResponse(error);
+
       },
       complete: () => {
         // Facultatif : Gérez la logique de complétion si nécessaire
@@ -45,12 +45,6 @@ export class LoginComponent {
   private handleLoginResponse(response: ServiceResponse<string>): void {
     this.alertMsg = response.message;
     this.alertColor = response.success ? 'green' : 'red';
-    this.inSubmission = false;
-  }
-
-  private handleLoginError(error: any): void {
-    this.alertMsg = error.error.message || 'Quelque chose s\'est mal passé.';
-    this.alertColor = 'red';
     this.inSubmission = false;
   }
 }

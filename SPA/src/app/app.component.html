@@ -1,5 +1,18 @@
-<app-nav></app-nav>
+<div class="antialiased bg-gray-50 dark:bg-gray-900">
 
-<router-outlet></router-outlet>
+   <!-- Navbar -->
+  <app-navbar></app-navbar>
 
-<app-auth *ngIf="!(auth.isUserAuthenticated()  | async)"></app-auth>
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <div class="flex flex-col flex-1 overflow-y-auto">
+    <!-- Main content -->
+    <div class="p-4">
+      <router-outlet></router-outlet>
+      <app-auth *ngIf="!(auth.isUserAuthenticated()  | async)"></app-auth>
+    </div>
+  </div>
+
+</div>
+
