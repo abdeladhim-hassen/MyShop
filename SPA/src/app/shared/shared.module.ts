@@ -13,6 +13,7 @@ import { SearchComponent } from './search/search.component';
 
 
 
+
 @NgModule({
   declarations: [
     ModalComponent,
@@ -21,13 +22,14 @@ import { SearchComponent } from './search/search.component';
     InputComponent,
     AlertComponent,
     EventBlockerDirective,
-    SearchComponent
+    SearchComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     NgxMaskDirective,
-    FormsModule
+
   ],
   exports: [
     ModalComponent,
@@ -36,7 +38,7 @@ import { SearchComponent } from './search/search.component';
     InputComponent,
     AlertComponent,
     EventBlockerDirective,
-    SearchComponent,
+    SearchComponent
   ],
   providers:[
     provideEnvironmentNgxMask(),

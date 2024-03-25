@@ -28,9 +28,9 @@ export function tokenGetter() {
   ],
   imports: [
     BrowserModule,
+    SharedModule,
     AppRoutingModule,
     AuthModule,
-    SharedModule,
     JwtModule.forRoot(
       {
         config: {

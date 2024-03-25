@@ -1,15 +1,16 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
+import { Observable, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrl: './search.component.css'
 })
 export class SearchComponent {
   @Input() sidebar = false;
-  searchText: string = "Search...";
+  searchText: string = "";
   suggestions: string[] = [];
   selectedIndex: number = -1; // Index of the selected suggestion
   @ViewChild('searchInput') searchInputRef!: ElementRef;
@@ -18,18 +19,17 @@ export class SearchComponent {
 
   onSearchChange(event: Event){
     const value = (event.target as HTMLInputElement).value;
-    if (value) {
+    if (value.trim()) {
       this.searchText = value;
       this.selectedIndex = -1; // Reset selectedIndex when search text changes
-      this.productService.getProductSearchSuggestions(this.searchText)
-        .subscribe(result => {
-          if (result && result.data) {
-            this.suggestions = result.data;
-            if (this.suggestions.length > 0) {
-              this.selectedIndex = 0; // Select the first suggestion by default
-            }
+      this.getSuggestions(value).subscribe(result => {
+        if (result) {
+          this.suggestions = result;
+          if (this.suggestions.length > 0) {
+            this.selectedIndex = 0; // Select the first suggestion by default
           }
-        });
+        }
+      });
     } else {
       this.suggestions = [];
       this.selectedIndex = -1;
@@ -41,13 +41,27 @@ export class SearchComponent {
     this.selectedIndex = -1;
     this.searchInputRef.nativeElement.focus();
     this.suggestions = [];
+    this.navigateToSearch(suggestion);
   }
 
   navigateToSearch(searchText: string) {
-    if(searchText  != null && searchText.trim().length  >0){
-      this.router.navigateByUrl(`/search/${searchText}/page/1`);
+    if(searchText.trim().length > 0){
+      this.router.navigateByUrl(`/search/${searchText.trim()}/page/1`);
     }
+  }
 
+  getSuggestions(value: string): Observable<string[]> {
+    return this.productService.getProductSearchSuggestions(value).pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(suggestions => {
+        if (suggestions && suggestions.data) {
+          return of(suggestions.data);
+        } else {
+          return of([]);
+        }
+      })
+    );
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -68,7 +82,8 @@ export class SearchComponent {
   }
 
   onBlur() {
-    // Clear suggestions when input loses focus
-    this.suggestions = [];
+    setTimeout(() => {
+      this.suggestions = [];
+    }, 200);
   }
 }
