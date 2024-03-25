@@ -49,9 +49,11 @@ export class AuthService {
       })
     );
   }
+
   register(request: UserRegister): Observable<ServiceResponse<number>> {
     return this.http.post<ServiceResponse<number>>(`${this.BaseUrl}/register`, request);
   }
+
   logout($event?: Event)
   {
     if ($event) {

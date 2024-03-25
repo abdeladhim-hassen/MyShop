@@ -1,34 +1,28 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Product } from '../Models/Product';
+import { Component, Input } from '@angular/core';
+import { Product } from '../Models/Product'; // Assuming the correct import path
+import { ProductVariant } from '../Models/ProductVariant';
 import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
-  encapsulation: ViewEncapsulation.None,
 })
-export class ProductListComponent implements OnInit {
-  Products: Product[] = [];
+export class ProductListComponent {
+  @Input() products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(public productService: ProductService) {}
 
-  ngOnInit(): void {
-    this.productService.productsChanged.subscribe(() => {
-      this.Products = this.productService.Products || []; // Use optional chaining
-    });
-  }
-
-  GetPriceText(product: Product): string {
-    const variants = product?.Variants || []; // Use optional chaining
+  GetMinPriceVariant(product: Product): ProductVariant | null {
+    const variants = product?.variants || [];
 
     if (variants.length === 0) {
-      return '';
+      return null;
     } else if (variants.length === 1) {
-      return `$${variants[0].Price}`;
+      return variants[0];
     }
 
-    const minPrice = Math.min(...variants.map((v) => v.Price));
-    return `Starting at $${minPrice}`;
+    const minPriceVariant = variants.reduce((min, current) => (current.price < min.price ? current : min));
+    return minPriceVariant;
   }
 }

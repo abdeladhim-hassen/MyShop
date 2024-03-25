@@ -1,18 +1,13 @@
-<div class="antialiased bg-gray-50 dark:bg-gray-900">
-
-   <!-- Navbar -->
+<header>
+  <!-- Navbar -->
   <app-navbar></app-navbar>
+</header>
 
-  <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
+<!-- Sidebar -->
+<app-sidebar class="mr-5"></app-sidebar>
 
-  <div class="flex flex-col flex-1 overflow-y-auto">
-    <!-- Main content -->
-    <div class="p-4">
-      <router-outlet></router-outlet>
-      <app-auth *ngIf="!(auth.isUserAuthenticated()  | async)"></app-auth>
-    </div>
-  </div>
-
-</div>
-
+<!-- Main content -->
+<main class="p-4 md:ml-64 h-auto pt-20">
+  <router-outlet></router-outlet>
+  <app-auth *ngIf="!(auth.isUserAuthenticated() | async)"></app-auth>
+</main>

@@ -1,9 +1,8 @@
 export interface OrderDetailsProductResponse {
-    ProductId: number;
-    Title: string;
-    ProductType: string;
-    ImageUrl: string;
-    Quantity: number;
-    TotalPrice: number;
+    productId: number;
+    title: string;
+    productType: string;
+    imageUrl: string;
+    quantity: number;
+    totalPrice: number;
   }
-  

@@ -1,8 +1,7 @@
 export interface OrderOverviewResponse {
-    Id: number;
-    OrderDate: Date;
-    TotalPrice: number;
-    Product: string;
-    ProductImageUrl: string;
+    id: number;
+    orderDate: Date;
+    totalPrice: number;
+    product: string;
+    productImageUrl: string;
   }
-  

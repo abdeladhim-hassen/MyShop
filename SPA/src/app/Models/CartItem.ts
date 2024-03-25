@@ -1,7 +1,6 @@
 export interface CartItem {
-    UserId?: number;
-    ProductId: number;
-    ProductTypeId: number;
-    Quantity: number;
+    userId?: number;
+    productId: number;
+    productTypeId: number;
+    quantity: number;
   }
-  

@@ -1,13 +1,13 @@
 import { ProductType } from "./ProductType";
 
 export interface ProductVariant {
-    ProductId: number;
-    ProductType?: ProductType; // Optional property
-    ProductTypeId: number;
-    Price: number;
-    OriginalPrice: number;
-    Visible: boolean;
-    Deleted: boolean;
-    Editing?: boolean; // Optional property
-    IsNew?: boolean; // Optional property
+    productId: number;
+    productType?: ProductType; // Optional property
+    productTypeId: number;
+    price: number;
+    originalPrice: number;
+    visible: boolean;
+    deleted: boolean;
+    editing?: boolean; // Optional property
+    isNew?: boolean; // Optional property
   }

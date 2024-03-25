@@ -1,7 +1,7 @@
 import { Product } from "../Models/Product";
 
 export interface ProductSearchResult {
-  Products: Product[];
-  Pages: number;
-  CurrentPage: number;
+  products: Product[];
+  pages: number;
+  currentPage: number;
 }

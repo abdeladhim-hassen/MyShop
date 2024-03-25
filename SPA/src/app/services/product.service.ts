@@ -1,4 +1,3 @@
-import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -6,22 +5,22 @@ import { environment } from '../../environments/environment';
 import { Product } from '../Models/Product';
 import { ServiceResponse } from '../DTOs/ServiceResponse';
 import { ProductSearchResult } from '../DTOs/ProductSearchResult ';
+import { EventEmitter, Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private readonly baseUrl = environment.apiUrl + '/product';
+  private readonly baseUrl = `${environment.apiUrl}/product`;
 
   productsChanged: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private http: HttpClient) {}
-
-  Products: Product[] = [];
-  Message: string = 'Loading products...';
-  CurrentPage: number = 1;
-  PageCount: number = 0;
-  LastSearchText: string = '';
+  Message = 'Loading products...';
+  CurrentPage = 1;
+  PageCount = 0;
+  LastSearchText = '';
   AdminProducts: Product[] = [];
 
   getProducts(categoryUrl: string | null): Observable<Product[]> {
@@ -34,12 +33,10 @@ export class ProductService {
       tap((products) => {
         this.CurrentPage = 1;
         this.PageCount = 0;
-        this.Products = products;
         if (products.length === 0) {
           this.Message = 'No products found';
-          console.log(this.Message)
+          console.log(this.Message);
         }
-        this.productsChanged.emit();
       }),
       catchError((error) => {
         console.error('Error fetching products:', error);
@@ -48,19 +45,17 @@ export class ProductService {
     );
   }
 
-  searchProducts(searchText: string, page: number): Observable<Product[]> {
+  searchProducts(searchText: string, page: number) {
     const url = `${this.baseUrl}/search/${searchText}/${page}`;
 
     return this.http.get<ServiceResponse<ProductSearchResult>>(url).pipe(
-      map((result) => result.data?.Products || []),
+      map((result) => result.data?.products || []),
       tap((data) => {
         this.CurrentPage = 1;
         this.PageCount = 0;
-        this.Products = data;
         if (data.length === 0) {
           this.Message = 'No products found';
         }
-        this.productsChanged.emit();
       }),
       catchError((error) => {
         console.error('Error fetching products:', error);
@@ -68,8 +63,8 @@ export class ProductService {
       })
     );
   }
-
-
-
+  getProductSearchSuggestions(searchText: string): Observable<ServiceResponse<string[]>> {
+    const url = `${this.baseUrl}/searchsuggestions/${searchText}`;
+    return this.http.get<ServiceResponse<string[]>>(url);
+  }
 }
-

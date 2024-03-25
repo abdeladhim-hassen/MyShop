@@ -1,10 +1,9 @@
 export interface CartProductResponse {
-    ProductId: number;
-    Title: string;
-    ProductTypeId: number;
-    ProductType: string;
-    ImageUrl: string;
-    Price: number;
-    Quantity: number;
+    productId: number;
+    title: string;
+    productTypeId: number;
+    productType: string;
+    imageUrl: string;
+    price: number;
+    quantity: number;
   }
-  

@@ -67,6 +67,7 @@ namespace API.Services.ProductService
                     .Where(p => p.Featured && p.Visible && !p.Deleted)
                     .Include(p => p.Variants.Where(v => v.Visible && !v.Deleted))
                     .Include(p => p.Images)
+                    .Include(p => p.Category)
                     .ToListAsync()
             };
 

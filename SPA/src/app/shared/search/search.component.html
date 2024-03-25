@@ -1,0 +1,31 @@
+<form [ngClass]="sidebar ? 'md:hidden mb-2' : 'hidden md:block ml-6 md:pl-2 space-x-20'" #searchForm="ngForm"
+      (ngSubmit)="navigateToSearch(searchText)">
+  <label [for]="sidebar ? 'sidebar' : 'topbar'" class="sr-only">Search</label>
+  <div class="relative">
+    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+      <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+           xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z">
+        </path>
+      </svg>
+    </div>
+    <input type="search" name="search" [id]="sidebar ? 'sidebar' : 'topbar'"
+           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500
+                  focus:border-primary-500 block pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600
+                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+           placeholder="Search" [(ngModel)]="searchText"
+           (input)="onSearchChange($event)" #searchInput (keydown)="onKeyDown($event)" (blur)="onBlur()" />
+  </div>
+  <ul *ngIf="suggestions.length > 0"
+       class="w-full  rounded-lg shadow-md bg-gray-800
+        text-white absolute p-1 overflow-y-auto max-w-56">
+    <li *ngFor="let suggestion of suggestions; let i = index"
+         class="text-xs uppercase border-b border-gray-600 py-2 px-5 mb-2 cursor-pointer hover:text-primary-500
+                {{ selectedIndex === i ? 'bg-gray-800' : 'bg-gray-700' }}"
+         (click)="selectSuggestion(suggestion)" (keydown.enter)="selectSuggestion(suggestion)"
+         [attr.tabindex]="0" [attr.aria-selected]="selectedIndex === i ? 'true' : 'false'">
+      {{ suggestion }}
+    </li>
+  </ul>
+</form>

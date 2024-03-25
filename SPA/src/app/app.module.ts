@@ -12,6 +12,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ResponseErrorHandlerInterceptor } from './interceptors/response-error-handler.interceptor';
+import { SharedModule } from './shared/shared.module';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -28,6 +30,7 @@ export function tokenGetter() {
     BrowserModule,
     AppRoutingModule,
     AuthModule,
+    SharedModule,
     JwtModule.forRoot(
       {
         config: {

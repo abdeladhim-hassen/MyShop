@@ -1,5 +1,4 @@
 export interface Image {
-    Id: number;
-    Data: string;
+    id: number;
+    data: string;
   }
-  
