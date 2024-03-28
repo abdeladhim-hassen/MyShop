@@ -5,15 +5,17 @@ import { UserChangePassword } from '../DTOs/UserChangePassword';
 import { ServiceResponse } from '../DTOs/ServiceResponse';
 import { UserLogin } from '../DTOs/UserLogin';
 import { UserRegister } from '../DTOs/UserRegister';
-import { environment } from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '../../environments/environment.development';
+
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private BaseUrl = environment.apiUrl + '/auth';
+  private readonly BaseUrl = environment.apiUrl + '/auth';
 
   constructor(private http: HttpClient,
               private jwtHelper: JwtHelperService) {}

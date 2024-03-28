@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalService } from '../shared/modal.service';
-import { AuthService } from '../services/auth.service';
-
-
+import { ModalService } from '../../shared/modal.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +8,6 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-
   constructor(
     public Model: ModalService,
     public auth: AuthService,

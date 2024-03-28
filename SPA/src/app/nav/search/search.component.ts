@@ -45,10 +45,11 @@ export class SearchComponent {
   }
 
   navigateToSearch(searchText: string) {
-    if(searchText.trim().length > 0){
+    if(searchText && searchText.trim().length > 0){
       this.router.navigateByUrl(`/search/${searchText.trim()}/page/1`);
     }
   }
+
 
   getSuggestions(value: string): Observable<string[]> {
     return this.productService.getProductSearchSuggestions(value).pipe(

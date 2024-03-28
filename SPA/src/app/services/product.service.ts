@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
 import { Product } from '../Models/Product';
 import { ServiceResponse } from '../DTOs/ServiceResponse';
 import { ProductSearchResult } from '../DTOs/ProductSearchResult ';
 import { EventEmitter, Injectable } from '@angular/core';
+import { environment } from '../../environments/environment.development';
+
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private readonly baseUrl = `${environment.apiUrl}/product`;
+  private readonly BaseUrl = `${environment.apiUrl}/product`;
 
   productsChanged: EventEmitter<void> = new EventEmitter<void>();
 
@@ -25,8 +26,8 @@ export class ProductService {
 
   getProducts(categoryUrl: string | null): Observable<Product[]> {
     const url = categoryUrl
-      ? `${this.baseUrl}/category/${categoryUrl}`
-      : `${this.baseUrl}/featured`;
+      ? `${this.BaseUrl}/category/${categoryUrl}`
+      : `${this.BaseUrl}/featured`;
 
     return this.http.get<ServiceResponse<Product[]>>(url).pipe(
       map((result) => result.data || []),
@@ -46,7 +47,7 @@ export class ProductService {
   }
 
   searchProducts(searchText: string, page: number) {
-    const url = `${this.baseUrl}/search/${searchText}/${page}`;
+    const url = `${this.BaseUrl}/search/${searchText}/${page}`;
 
     return this.http.get<ServiceResponse<ProductSearchResult>>(url).pipe(
       map((result) => result.data?.products || []),
@@ -64,7 +65,7 @@ export class ProductService {
     );
   }
   getProductSearchSuggestions(searchText: string): Observable<ServiceResponse<string[]>> {
-    const url = `${this.baseUrl}/searchsuggestions/${searchText}`;
+    const url = `${this.BaseUrl}/searchsuggestions/${searchText}`;
     return this.http.get<ServiceResponse<string[]>>(url);
   }
 }

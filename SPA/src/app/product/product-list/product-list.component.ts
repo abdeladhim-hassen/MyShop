@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { Product } from '../Models/Product'; // Assuming the correct import path
-import { ProductVariant } from '../Models/ProductVariant';
-import { ProductService } from '../services/product.service';
+import { Product } from '../../Models/Product';
+import { ProductService } from '../../services/product.service';
+import { ProductVariant } from '../../Models/ProductVariant';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css'],
+  styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
   @Input() products: Product[] = [];

@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Product } from '../Models/Product';
 import { ProductService } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from '../Models/Product';
-
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   products: Product[] = []
 
   searchText: string | null = null;
@@ -26,7 +25,7 @@ export class HomeComponent implements OnInit {
       this.searchText = params['searchText'] || null;
       this.categoryUrl = params['categoryUrl'] || null;
       this.page = +params['page'] || 1; // Added "+" to convert string to number
-
+      console.log(`Search Text: ${this.searchText}, Category Url: ${this.categoryUrl}`);
       if (this.searchText) {
         this.productService.searchProducts(this.searchText, this.page).subscribe(
           (products) => {
@@ -34,6 +33,7 @@ export class HomeComponent implements OnInit {
           }
         );
       } else {
+        console.log(this.categoryUrl);
         this.productService.getProducts(this.categoryUrl).subscribe(
           (products) => {
             this.products = products; // Set fetched products
